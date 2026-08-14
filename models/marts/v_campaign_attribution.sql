@@ -2,14 +2,16 @@
 
 -- Campaign attribution: one attributed row per conversion, using a 7-day
 -- attribution window and including view-through touchpoints.
--- DISTINCT guarantees conversion grain even when a user has multiple
--- qualifying touchpoints.
+-- Added touchpoint_type / touchpoint_ts for richer downstream reporting.
+-- DISTINCT ensures conversion grain when a user has multiple qualifying touchpoints.
 select distinct
     c.conversion_id,
     c.user_id,
     c.campaign_id,
     c.campaign_name,
-    c.conversion_date
+    c.conversion_date,
+    t.touchpoint_type,
+    t.touchpoint_ts
 from {{ ref('stg_conversions') }} c
 left join {{ ref('stg_touchpoints') }} t
     on  t.user_id      = c.user_id
