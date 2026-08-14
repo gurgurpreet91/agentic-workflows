@@ -3,7 +3,7 @@
 -- Campaign attribution: one attributed row per conversion, using a 7-day
 -- attribution window and including view-through touchpoints.
 -- Added touchpoint_type / touchpoint_ts for richer downstream reporting.
--- DISTINCT required because a conversion may have multiple qualifying touchpoints.
+-- DISTINCT ensures conversion grain when multiple touchpoints exist.
 select distinct
     c.conversion_id,
     c.user_id,
